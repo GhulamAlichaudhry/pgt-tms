@@ -1,0 +1,48 @@
+# Render.com Blueprint Configuration
+# PGT International Transport Management System
+
+services:
+  # Backend API Service
+  - type: web
+    name: pgt-tms-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pgt-tms-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 1440
+      - key: ENVIRONMENT
+        value: production
+    healthCheckPath: /
+
+  # Frontend Service
+  - type: web
+    name: pgt-tms-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# Database
+databases:
+  - name: pgt-tms-db
+    databaseName: pgt_tms
+    user: pgt_user
+    plan: free

@@ -1,0 +1,25 @@
+# .htaccess for API Reverse Proxy
+# Place this in: /home/pgtinter/public_html/tms/api/.htaccess
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Redirect to HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Proxy all API requests to backend Python app
+  RewriteRule ^(.*)$ http://127.0.0.1:8002/$1 [P,L]
+</IfModule>
+
+# CORS Headers for API
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+  Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+  Header set Access-Control-Max-Age "3600"
+  
+  # Handle preflight OPTIONS requests
+  RewriteCond %{REQUEST_METHOD} OPTIONS
+  RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>

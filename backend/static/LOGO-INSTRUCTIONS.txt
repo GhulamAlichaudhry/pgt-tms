@@ -1,0 +1,37 @@
+COMPANY LOGO INSTRUCTIONS
+=========================
+
+To add your company logo to all reports:
+
+1. Prepare your logo file:
+   - Format: PNG (recommended) or JPG
+   - Recommended size: 300x150 pixels (2:1 aspect ratio)
+   - Transparent background preferred for PNG
+   - Clear, high-quality image
+
+2. Name the file:
+   logo.png
+
+3. Place it in this folder:
+   backend/static/logo.png
+
+4. The logo will automatically appear:
+   - At the top of all PDF reports
+   - Centered above the company name
+   - Properly sized and positioned
+
+5. No code changes needed!
+   - Just add the file
+   - Restart the backend if it's running
+   - Generate any report to see the logo
+
+NOTES:
+- If no logo file is present, reports will still work perfectly
+- The company name and details will display without the logo
+- You can update the logo anytime by replacing the file
+
+CURRENT STATUS:
+- Logo folder created: ✓
+- Logo file added: ✗ (Please add logo.png)
+
+For questions, refer to: COMPANY-BRANDING-IMPLEMENTATION.md
